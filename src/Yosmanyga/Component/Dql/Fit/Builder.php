@@ -28,7 +28,7 @@ class Builder
     {
         $alias = uniqid("A");
 
-        /** @var \Doctrine\DBAL\Query\QueryBuilder $qb */
+        /** @var \Doctrine\Orm\QueryBuilder $qb */
         $qb = $this->em->createQueryBuilder();
         $qb->select($alias)->from($class, $alias);
 
