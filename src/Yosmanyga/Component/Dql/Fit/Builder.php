@@ -40,14 +40,14 @@ class Builder
 
             $where = $fit->getWhere($alias);
             if ($where) {
-                $qb->where($where);
+                $qb->andWhere($where);
             }
         }
 
         if ($fit instanceof WhereFitInterface) {
             $where = $fit->getWhere($alias);
             if ($where) {
-                $qb->where($where);
+                $qb->andWhere($where);
             }
         }
 
