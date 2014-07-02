@@ -32,6 +32,18 @@ class Builder
         $qb = $this->em->createQueryBuilder();
         $qb->select($alias)->from($class, $alias);
 
+        if ($fit instanceof WhereWithJoinFitInterface) {
+            $join = $fit->getJoin($alias);
+            if ($join) {
+                $qb->join($alias, $join->getJoin(), $join->getAlias(), $join->getCondition());
+            }
+
+            $where = $fit->getWhere($alias);
+            if ($where) {
+                $qb->where($where);
+            }
+        }
+
         if ($fit instanceof WhereFitInterface) {
             $where = $fit->getWhere($alias);
             if ($where) {
