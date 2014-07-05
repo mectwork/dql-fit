@@ -4,7 +4,7 @@ namespace Yosmanyga\Component\Dql\Fit;
 
 use Doctrine\ORM\Query\Expr;
 
-class AndFit implements WhereFitInterface, OrderFitInterface, LimitFitInterface
+class AndFit implements SelectFitInterface, WhereFitInterface, OrderFitInterface, LimitFitInterface
 {
     /**
      * @var array
@@ -17,6 +17,22 @@ class AndFit implements WhereFitInterface, OrderFitInterface, LimitFitInterface
     function __construct($fits)
     {
         $this->fits = $fits;
+    }
+
+    /**
+     * @param string $alias
+     * @return Expr\Select|null
+     */
+    public function getSelect($alias)
+    {
+        $expr = new Expr\Select();
+        foreach ($this->fits as $fit) {
+            if ($fit instanceof SelectFitInterface) {
+                $expr->add($fit->getSelect($alias));
+            }
+        }
+
+        return $expr->count() != 0 ? $expr : null;
     }
 
     /**

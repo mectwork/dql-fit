@@ -30,7 +30,14 @@ class Builder
 
         /** @var \Doctrine\Orm\QueryBuilder $qb */
         $qb = $this->em->createQueryBuilder();
-        $qb->select($alias)->from($class, $alias);
+
+        if ($fit instanceof SelectFitInterface && $fit->getSelect($alias)) {
+            $qb->select($fit->getSelect($alias));
+        } else {
+            $qb->select($alias);
+        }
+
+        $qb->from($class, $alias);
 
         if ($fit instanceof WhereWithJoinFitInterface) {
             $join = $fit->getJoin($alias);
