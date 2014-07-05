@@ -1,3 +1,5 @@
+<?php 
+
 namespace Yosmanyga\Component\Dql\Fit;
 
 use Yosmanyga\Component\Dql\Fit\LimitFitInterface;
